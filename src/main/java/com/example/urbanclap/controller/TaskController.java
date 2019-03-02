@@ -32,10 +32,18 @@ public class TaskController {
 
     @GetMapping
     @ApiOperation(value = "Get All tasks ", response = List.class)
-    public ResponseEntity<List<Task>> getTasks() {
+    public ResponseEntity<List<Task>> getTasks(@RequestParam(required = false) TaskStatus status,
+            @RequestParam(required = false) Double lat, @RequestParam(required = false) Double lng) {
 
-        List<Task> tasks = taskService.getAllTasks();
+        List<Task> tasks = null;
 
+        if (status != null)
+            tasks = taskService.getAllTasksByFilter(status);
+        else if(lat!=null && lng!=null) {
+            tasks= taskService.getAllNearest(lat,lng);
+        }
+        else
+            tasks = taskService.getAllTasks();
         return new ResponseEntity<List<Task>>(tasks, HttpStatus.OK);
     }
 

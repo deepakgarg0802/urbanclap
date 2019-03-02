@@ -1,4 +1,4 @@
-# E Wallet Application
+# Urban clap Application
 
 ## Problem statement:
 

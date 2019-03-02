@@ -24,6 +24,14 @@ public class TaskServiceImpl implements TaskService {
     public List<Task> getAllTasks() {
         return taskRepository.findAllByOrderByCreatedTime();
     }
+    
+    public List<Task> getAllNearest(Double lat,Double lng) {
+        return taskRepository.findAllOrderByLoc(lat, lng);
+    }
+    
+    public List<Task> getAllTasksByFilter(TaskStatus status) {
+        return taskRepository.findAllByStatusOrderByCreatedTime(status);
+    }
 
     @Override
     public TaskReq createNewTask(TaskReq task) {
