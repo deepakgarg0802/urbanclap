@@ -12,10 +12,11 @@ public class TaskMapper {
         Task task= new Task();
         task.setName(req.getName());
         task.setCategory(req.getCategory());
-        task.setDateTime(LocalDateTime.now());
+        task.setCreatedTime(LocalDateTime.now());
         task.setDescription(req.getDescription());
         task.setStatus(TaskStatus.NEW);
-        task.setGPlusLocation(req.getLocation());
+        task.setLatitude(req.getLatitiude());
+        task.setLongitude(req.getLongitude());
         
         return task;
     }
