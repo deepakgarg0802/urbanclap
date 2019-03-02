@@ -47,5 +47,5 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "worker_id")
-    private Worker assignedTo;
+    private User assignedTo;
 }

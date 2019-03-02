@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.urbanclap.dto.request.TaskReq;
 import com.example.urbanclap.entities.Task;
-import com.example.urbanclap.entities.Worker;
+import com.example.urbanclap.entities.User;
 import com.example.urbanclap.enums.TaskStatus;
 import com.example.urbanclap.repository.TaskRepository;
 import com.example.urbanclap.service.TaskService;
@@ -41,7 +41,7 @@ public class TaskServiceImpl implements TaskService {
         return task;
     }
 
-    public Task acceptTask(Long taskId,Worker worker) {
+    public Task acceptTask(Long taskId,User worker) {
 
         Optional<Task> task = taskRepository.findById(taskId);
         if (!task.isPresent()) {
