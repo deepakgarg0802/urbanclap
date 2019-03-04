@@ -21,31 +21,24 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
-    //@Secured({"ROLE_ADMIN", "ROLE_USER"})
-    @PreAuthorize("hasRole('ADMIN')")
-    @RequestMapping(value="/user", method = RequestMethod.GET)
-    public List listUser(){
+    // @Secured({"ROLE_ADMIN", "ROLE_USER"})
+    //@PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public List<User> listUser() {
         return userService.findAll();
     }
 
-    //@Secured("ROLE_USER")
-    //@PreAuthorize("hasRole('USER')")
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    public User getOne(@PathVariable(value = "id") Long id){
+    // @Secured("ROLE_USER")
+    @PreAuthorize("hasRole('USER')")
+    //// @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
+    public User getOne(@PathVariable(value = "id") Long id) {
         return userService.findById(id);
     }
 
-    @RequestMapping(value="/signup", method = RequestMethod.POST)
-    public User create(@RequestBody UserDto user){
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public User saveUser(@RequestBody User user) {
         return userService.save(user);
-    }
-
-    @PreAuthorize("hasRole('ADMIN')")
-    @RequestMapping(value="/user/{id}", method = RequestMethod.DELETE)
-    public User deleteUser(@PathVariable(value = "id") Long id){
-        userService.delete(id);
-        return new User(id);
     }
 
 }

@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.urbanclap.dto.request.LoginUser;
+import com.example.urbanclap.entities.AuthToken;
+import com.example.urbanclap.service.impl.UserServiceImpl;
 import com.example.urbanclap.util.TokenProvider;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -26,20 +29,17 @@ public class AuthenticationController {
     @Autowired
     private TokenProvider jwtTokenUtil;
 
+    @Autowired
+    private UserServiceImpl userService;
+
     @RequestMapping(value = "/generate-token", method = RequestMethod.POST)
-    public ResponseEntity register(@RequestBody LoginUser loginUser) throws AuthenticationException {
+    public ResponseEntity<?> register(@RequestBody LoginUser loginUser) throws AuthenticationException {
 
         final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginUser.getUsername(),
-                        loginUser.getPassword()
-                )
-        );
+                new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = jwtTokenUtil.generateToken(authentication);
         return ResponseEntity.ok(new AuthToken(token));
     }
 
 }
-
-
